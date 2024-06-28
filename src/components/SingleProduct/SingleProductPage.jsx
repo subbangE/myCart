@@ -20,7 +20,7 @@ const product = {
   stock: 10,
 };
 
-const SingleProductPage = () => {
+const SingleProductPage = ({ addToCart }) => {
   const [selectedImage, setSelectedImage] = useState(0);
 
   const { id } = useParams();
@@ -73,7 +73,12 @@ const SingleProductPage = () => {
               />
             </div>
 
-            <button className="search_button add_cart">장바구니 추가</button>
+            <button
+              onClick={() => addToCart(product, quantity)}
+              className="search_button add_cart"
+            >
+              장바구니 추가
+            </button>
           </div>
         </>
       )}
