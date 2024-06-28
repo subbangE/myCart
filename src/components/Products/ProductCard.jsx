@@ -4,9 +4,11 @@ import basket from "../../assets/basket.png";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../../contexts/CartContext";
+import UserContext from "../../contexts/UserContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
+  const user = useContext(UserContext);
 
   return (
     <article className="product_card">
@@ -33,7 +35,7 @@ const ProductCard = ({ product }) => {
             <p className="product_review_count">{product?.reviews.counts}</p>
           </div>
 
-          {product?.stock > 0 && (
+          {product?.stock > 0 && user && (
             <button
               className="add_to_cart"
               onClick={() => addToCart(product, 1)}
