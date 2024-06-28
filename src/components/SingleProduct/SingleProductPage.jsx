@@ -4,8 +4,8 @@ import QuantityInput from "./QuantityInput";
 import { useParams } from "react-router-dom";
 import useData from "../../Hook/useData";
 import Loader from "../Common/Loader";
-import CartContext from "../../contexts/CartContext";
-import UserContext from "../../contexts/UserContext";
+import CartContext from "../contexts/CartContext";
+import UserContext from "../contexts/UserContext";
 
 const SingleProductPage = () => {
   //선택한 이미지 기억 (선택한 이미지 인덱스 번호를 저장)

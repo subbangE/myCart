@@ -3,8 +3,8 @@ import star from "../../assets/white-star.png";
 import basket from "../../assets/basket.png";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import CartContext from "../../contexts/CartContext";
-import UserContext from "../../contexts/UserContext";
+import CartContext from "../contexts/CartContext";
+import UserContext from "../contexts/UserContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);

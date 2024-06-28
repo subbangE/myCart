@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./HeroSection.css";
 
 const HeroSection = ({ title, subtitle, link, image }) => {
@@ -6,9 +7,12 @@ const HeroSection = ({ title, subtitle, link, image }) => {
       <div className="align_center">
         <h2 className="hero_title">{title}</h2>
         <p className="hero_subtitle">{subtitle}</p>
-        <a href={link} className="hero_link">
+        <Link to={`${link}`} className="hero_link">
           바로구매
-        </a>
+        </Link>
+        {/* <a href={link} className="hero_link">
+          바로구매
+        </a> */}
       </div>
 
       <div className="align_center">
