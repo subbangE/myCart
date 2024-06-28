@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "MangoDdobak-B";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  background-color: #f6f8fa;
+  font-family: "MangoDdobak-B", sans-serif;
+}
+
+.align_center {
+  display: flex;
+  align-items: center;
+}
+
+a {
+  font-size: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
