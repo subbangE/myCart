@@ -9,7 +9,7 @@ import CartContext from "../../contexts/CartContext";
 const CartPage = () => {
   const [subTotal, setSubTotal] = useState(0);
   const user = useContext(UserContext);
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, removeFromCart } = useContext(CartContext);
   //console.log(user);
   useEffect(() => {
     let total = 0;
@@ -43,6 +43,7 @@ const CartPage = () => {
               <td>{(quantity * product.price).toLocaleString("ko-KR")} 원</td>
               <td>
                 <img
+                  onClick={() => removeFromCart(product._id)}
                   src={remove}
                   alt="remove icon"
                   className="cart_remove_icon"

@@ -38,6 +38,14 @@ function App() {
       .catch((err) => toast.error("상품 추가에 실패했습니다."));
   };
 
+  // 장바구니 삭제
+  const removeFromCart = (id) => {
+    const oldCart = [...cart];
+    const newCart = oldCart.filter((item) => item.product._id !== id);
+
+    setCart(newCart);
+  };
+
   //카트 정보를 가져옴
   const getCart = () => {
     getCartAPI()
@@ -68,7 +76,7 @@ function App() {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       <UserContext.Provider value={user}>
         <div className="app">
           <Navbar user={user} cartCount={cart.length} />
