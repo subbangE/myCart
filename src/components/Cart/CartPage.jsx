@@ -1,39 +1,36 @@
 import "./CartPage.css";
 import remove from "../../assets/remove.png";
-import user from "../../assets/user.webp";
 import Table from "../Common/Table";
 import QuantityInput from "../SingleProduct/QuantityInput";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/UserContext";
-import { useEffect, useState, useContext } from "react";
+import CartContext from "../../contexts/CartContext";
 
-const CartPage = ({ cart }) => {
+const CartPage = () => {
   const [subTotal, setSubTotal] = useState(0);
-  const userObj = useContext(UserContext);
-  console.log(userObj);
-
+  const user = useContext(UserContext);
+  const { cart, addToCart } = useContext(CartContext);
+  //console.log(user);
   useEffect(() => {
     let total = 0;
     cart.forEach((item) => {
       total += item.product.price * item.quantity;
     });
-    setSubTotal(total);
+    setSubTotal(total); //제품 합계가격을 계산해서 카트가 바뀔때마다 저장
   }, [cart]);
-
-  // console.log(cart);
-
   return (
     <section className="align_center cart_page">
       <div className="align_center user_info">
         <img
-          src={`http://localhost:5000/profile/${userObj.profilePic}`}
+          src={`http://localhost:5000/profile/${user?.profilePic}`}
           alt="user profile"
         />
         <div>
-          <p className="user_name">{userObj.name}</p>
-          <p className="user_email">{userObj.email}</p>
+          <p className="user_name">{user?.name}</p>
+          <p className="user_email">{user?.email}</p>
         </div>
       </div>
-
+      {/* 테이블 컴포넌트는 테이블의 제목부분을 배열로 입력하면 생성됨! */}
       <Table headings={["상품", "가격", "구매수량", "총 금액", "상품삭제"]}>
         <tbody>
           {cart.map(({ product, quantity }) => (
@@ -55,6 +52,7 @@ const CartPage = ({ cart }) => {
           ))}
         </tbody>
       </Table>
+      {/* 단순 계산 테이블 추가 */}
       <table className="cart_bill">
         <tbody>
           <tr>

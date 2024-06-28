@@ -1,35 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./SingleProductPage.css";
 import QuantityInput from "./QuantityInput";
 import { useParams } from "react-router-dom";
 import useData from "../../Hook/useData";
 import Loader from "../Common/Loader";
+import CartContext from "../../contexts/CartContext";
 
-const product = {
-  id: 1,
-  title: "상품 타이틀",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime aliquid rerum a? Fugiat soluta facilis deleniti voluptatibus ab architecto dolores a, vero, beatae veniam error doloribus quia laudantium? Error fuga consequuntur quia accusantium? Consequatur modi laboriosam saepe culpa, ab atque.",
-  price: 9900,
-  images: [
-    "https://via.placeholder.com/500x500?text=Product+Image+1",
-    "https://via.placeholder.com/500x500?text=Product+Image+2",
-    "https://via.placeholder.com/500x500?text=Product+Image+3",
-    "https://via.placeholder.com/500x500?text=Product+Image+4",
-  ],
-  stock: 10,
-};
-
-const SingleProductPage = ({ addToCart }) => {
+const SingleProductPage = () => {
+  //선택한 이미지 기억 (선택한 이미지 인덱스 번호를 저장)
   const [selectedImage, setSelectedImage] = useState(0);
-
-  const { id } = useParams();
-  // console.log(id);
-  const { data: product, error, isLoading } = useData(`/products/${id}`);
-  // console.log(product);
-
   const [quantity, setQuantity] = useState(1);
-
+  const { id } = useParams(); //주소변수값 id를 얻기
+  const { addToCart } = useContext(CartContext);
+  //console.log(id);
+  //id값으로 제품 데이터 요청
+  const { data: product, error, isLoading } = useData(`products/${id}`);
+  //console.log(product);
   return (
     <section className="align_center single_product">
       {error && <em className="form_error">{error}</em>}
@@ -49,7 +35,7 @@ const SingleProductPage = ({ addToCart }) => {
               ))}
             </div>
 
-            {/* 큰 이미지는 왼쪽의 4개의 이미지중 선택한 인덱스 번호의 이미지 표시 */}
+            {/* 큰 이미지는 왼쪽의 4개의 이미지중 선택한 인덱스 번호으 이미지 표시 */}
             <img
               src={`http://localhost:5000/products/${product.images[selectedImage]}`}
               alt={product.title}
