@@ -3,7 +3,11 @@ import Navbar from "./components/Navbar/Navbar";
 import Routing from "./components/Routing/Routing";
 import { jwtDecode } from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { addToCartAPI, getCartAPI } from "./services/cartServices";
+import {
+  addToCartAPI,
+  getCartAPI,
+  removeFromCartAPI,
+} from "./services/cartServices";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -18,8 +22,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
   console.log(cart);
-  //제품과, 개수를 입력하여 장바구니 업데이트
 
+  //제품과, 개수를 입력하여 장바구니 업데이트
   const addToCart = (product, quantity) => {
     //같은 제품이 추가되면 수량만 추가하자!
     const updatedCart = [...cart]; //장바구니 복사
@@ -38,14 +42,6 @@ function App() {
       .catch((err) => toast.error("상품 추가에 실패했습니다."));
   };
 
-  // 장바구니 삭제
-  const removeFromCart = (id) => {
-    const oldCart = [...cart];
-    const newCart = oldCart.filter((item) => item.product._id !== id);
-
-    setCart(newCart);
-  };
-
   //카트 정보를 가져옴
   const getCart = () => {
     getCartAPI()
@@ -57,11 +53,21 @@ function App() {
       });
   };
 
+  //장바구니에서 상품 삭제 함수
+  const removeFromCart = (id) => {
+    const oldCart = [...cart];
+    const newCart = oldCart.filter((item) => item.product._id !== id);
+    setCart(newCart);
+    removeFromCartAPI(id).catch((err) => {
+      toast.error("장바구니 상품 삭제 에러");
+    });
+  };
+
   useEffect(() => {
     getCart(); //처음 시작 및 유저가 바뀌면 가져옴
   }, [user]);
-  //시작시 jwt 토큰을 가져옴
 
+  //시작시 jwt 토큰을 가져옴
   useEffect(() => {
     try {
       const jwt = localStorage.getItem("token");

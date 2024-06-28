@@ -8,3 +8,7 @@ export function addToCartAPI(id, quantity) {
 export async function getCartAPI() {
   return await apiClient.get("/cart");
 }
+
+export function removeFromCartAPI(id) {
+  return apiClient.patch(`/cart/remove/${id}`);
+}
