@@ -1,7 +1,7 @@
 import "./ProductCard.css";
 import star from "../../assets/white-star.png";
 import basket from "../../assets/basket.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../../contexts/CartContext";
 import UserContext from "../../contexts/UserContext";
@@ -9,21 +9,20 @@ import UserContext from "../../contexts/UserContext";
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
   const user = useContext(UserContext);
-
   return (
     <article className="product_card">
       <div className="product_image">
-        <NavLink to={`/product/${product?.id}`}>
+        <Link to={`/product/${product?._id}`}>
           <img
             src={`http://localhost:5000/products/${product?.images[0]}`}
             alt="product image"
           />
-        </NavLink>
+        </Link>
       </div>
 
       <div className="product_details">
         <h3 className="product_price">
-          {product?.price.toLocaleString("ko-KR")} 원
+          {product?.price?.toLocaleString("ko-KR")} 원
         </h3>
         <p className="product_title">{product?.title}</p>
 

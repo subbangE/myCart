@@ -110,7 +110,7 @@ function App() {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateCart }}
+      value={{ cart, addToCart, removeFromCart, updateCart, setCart }}
     >
       <UserContext.Provider value={user}>
         <div className="app">

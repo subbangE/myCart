@@ -5,12 +5,29 @@ import QuantityInput from "../SingleProduct/QuantityInput";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/UserContext";
 import CartContext from "../../contexts/CartContext";
+import { checkoutAPI } from "../../services/orderServices";
 
 const CartPage = () => {
   const [subTotal, setSubTotal] = useState(0);
   const user = useContext(UserContext);
-  const { cart, removeFromCart, updateCart } = useContext(CartContext);
+  const { cart, removeFromCart, updateCart, setCart } = useContext(CartContext);
+
+  // checkout 함수
+  const checkout = () => {
+    const oldCart = [...cart];
+    setCart([]); //카트 비우기
+    checkoutAPI()
+      .then(() => {
+        toast.success("주문 성공!");
+      })
+      .catch(() => {
+        toast.error("checkout 중 에러발생.");
+        setCart(oldCart);
+      });
+  };
+
   //console.log(user);
+
   useEffect(() => {
     let total = 0;
     cart.forEach((item) => {
@@ -18,6 +35,7 @@ const CartPage = () => {
     });
     setSubTotal(total); //제품 합계가격을 계산해서 카트가 바뀔때마다 저장
   }, [cart]);
+
   return (
     <section className="align_center cart_page">
       <div className="align_center user_info">
@@ -77,7 +95,9 @@ const CartPage = () => {
         </tbody>
       </table>
 
-      <button className="search_button checkout_button">결재하기</button>
+      <button className="search_button checkout_button" onClick={checkout}>
+        결제하기
+      </button>
     </section>
   );
 };
