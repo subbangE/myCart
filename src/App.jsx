@@ -5,7 +5,9 @@ import { jwtDecode } from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import {
   addToCartAPI,
+  decreaseProductAPI,
   getCartAPI,
+  increaseProductAPI,
   removeFromCartAPI,
 } from "./services/cartServices";
 import { ToastContainer, toast } from "react-toastify";
@@ -63,6 +65,31 @@ function App() {
     });
   };
 
+  // 장바구니에서 상품 증가 감소 하기
+  const updateCart = (type, id) => {
+    const updatedCart = [...cart];
+    const productIndex = updatedCart.findIndex(
+      (item) => item.product._id === id
+    );
+
+    if (type === "increase") {
+      updatedCart[productIndex].quantity += 1;
+      setCart(updatedCart);
+
+      increaseProductAPI(id).catch((err) => {
+        toast.error("상품 증가 에러");
+      });
+    }
+    if (type === "decrease") {
+      updatedCart[productIndex].quantity -= 1;
+      setCart(updatedCart);
+
+      decreaseProductAPI(id).catch((err) => {
+        toast.error("상품 감소 에러");
+      });
+    }
+  };
+
   useEffect(() => {
     getCart(); //처음 시작 및 유저가 바뀌면 가져옴
   }, [user]);
@@ -82,7 +109,9 @@ function App() {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, updateCart }}
+    >
       <UserContext.Provider value={user}>
         <div className="app">
           <Navbar user={user} cartCount={cart.length} />
