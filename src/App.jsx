@@ -7,6 +7,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { addToCartAPI, getCartAPI } from "./services/cartServices";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserContext from "./contexts/UserContext";
 
 setAuthToken(localStorage.getItem("token"));
 
@@ -66,13 +67,15 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Navbar user={user} cartCount={cart.length} />
-      <main>
-        <ToastContainer position="bottom-right" />
-        <Routing addToCart={addToCart} cart={cart} />
-      </main>
-    </div>
+    <UserContext.Provider value={user}>
+      <div className="app">
+        <Navbar user={user} cartCount={cart.length} />
+        <main>
+          <ToastContainer position="bottom-right" />
+          <Routing addToCart={addToCart} cart={cart} />
+        </main>
+      </div>
+    </UserContext.Provider>
   );
 }
 
